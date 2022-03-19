@@ -30,7 +30,7 @@ fn str_to_gmstr(arg:&str) -> GMStr {
 static CHANNEL: Mutex<Lazy<(Sender<DebouncedEvent>, Receiver<DebouncedEvent>)>> = const_mutex(Lazy::new(|| channel()));
     
 #[no_mangle]
-pub extern fn __gm82live_init_dll(directory: GMStrArg) -> GMReal {
+pub extern fn __gm82live_dll_fw_init(directory: GMStrArg) -> GMReal {
     let directory = gmstr_to_str(directory);
     
     // Create a channel to receive the events.
@@ -44,13 +44,14 @@ pub extern fn __gm82live_init_dll(directory: GMStrArg) -> GMReal {
     // below will be monitored for changes.
     watcher.watch(directory, RecursiveMode::Recursive).unwrap();
     
+    // Bestow the watcher with immortality.
     Box::leak(watcher);    
     
     0.0
 }
 
 #[no_mangle]
-pub extern fn __gm82live_poll_dll() -> GMStr {
+pub extern fn __gm82live_dll_fw_poll() -> GMStr {
     let (_, receiver) = &**CHANNEL.lock();
     match receiver.try_recv() {
         Ok(event) => string_to_gmstr(format!("{:?}", event)),
