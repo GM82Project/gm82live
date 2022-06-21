@@ -4,7 +4,7 @@
     globalvar __gm82live_nochange;__gm82live_nochange=ds_list_create()
 
 
-//live room editor module
+//----------------------live room editor module---------------------------------
 
 #define __gm82live_re_init
     with (__gm82core_object) {
@@ -28,6 +28,7 @@
 
 #define __gm82live_re_poll
     if (listeningsocket_can_accept(__gm82live_listen)) {
+        //currently if a second connection is made this will leak a buffer and a socket
         __gm82live_sock=socket_create()
         __gm82live_buf=buffer_create()
         listeningsocket_accept(__gm82live_listen,__gm82live_sock)
@@ -42,8 +43,14 @@
             if (type==0) {
                 repeat (buffer_read_u16(__gm82live_buf)) {
                     __obj=buffer_read_u16(__gm82live_buf)
+                    //if it isnt on the exclusion list
                     if (ds_list_find_index(__gm82live_nochange,__obj)==-1) {
-                        with (__obj) if (object_index==__obj) instance_destroy()
+                        //clear out all instances of this obj
+                        with (__obj) if (object_index==__obj) {
+                            //do room end before destroy to prevent memory leaks
+                            event_perform(ev_other,ev_room_end)
+                            instance_destroy()
+                        }
                         repeat (buffer_read_u16(__gm82live_buf)) {
                             __i=instance_create(buffer_read_i32(__gm82live_buf),buffer_read_i32(__gm82live_buf),__obj)
                             if (instance_exists(__i)) {                            
@@ -57,6 +64,8 @@
                                     event_perform(ev_other,ev_room_start)
                                 }
                             } else {
+                                //bro am i allergic to comments? why did i do this
+                                //oh yeah its because some instances might destroy themselves on create
                                 buffer_read_double(__gm82live_buf)
                                 buffer_read_double(__gm82live_buf)
                                 buffer_read_double(__gm82live_buf)
@@ -66,6 +75,8 @@
                             }
                         }
                     } else {
+                        //this object is excluded, so we skip all instances of it
+                        //(the room editor does not have this kind of information)
                         repeat (buffer_read_u16(__gm82live_buf)) {
                             buffer_read_i32(__gm82live_buf)
                             buffer_read_i32(__gm82live_buf)
@@ -81,7 +92,9 @@
             }
             //tiles
             if (type==1) {
-                /*repeat (buffer_read_u32(__gm82live_buf)) {
+                /*
+                tiles arent implemented at the moment
+                repeat (buffer_read_u32(__gm82live_buf)) {
                     tile_layer_delete(buffer_read_i32(__gm82live_buf))
                 }
                 repeat (buffer_read_u32(__gm82live_buf)) {
@@ -92,7 +105,7 @@
     }
 
 
-//live code editor module
+//----------------------live code editor module---------------------------------
 
 #define __gm82live_fw_init
     //__gm82live_dll_fw_init(working_directory+"\")
