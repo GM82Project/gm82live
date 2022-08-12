@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "0.2",
 	"author": "renex",
-	"date": "21/06/2022",
+	"date": "11/08/2022",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package allows realtime development with compatible tools.",
 	"helpfile": "",
@@ -83,7 +83,7 @@
 					"extname": "",
 					"calltype": 2,
 					"helpline": "",
-					"hidden": true,
+					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
 				},
@@ -92,7 +92,7 @@
 					"extname": "",
 					"calltype": 2,
 					"helpline": "",
-					"hidden": true,
+					"hidden": false,
 					"argtypes": [],
 					"returntype": 2
 				},

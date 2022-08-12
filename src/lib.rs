@@ -1,4 +1,3 @@
-use std::os::raw::c_char;
 use std::ffi::CString;
 use std::ffi::CStr;
 use notify::{Watcher, RecursiveMode, watcher, DebouncedEvent};
@@ -9,20 +8,21 @@ use parking_lot::const_mutex;
 use parking_lot::Mutex;
 
 type GMReal = f64;
-type GMStr = *mut c_char;
-type GMStrArg = *const i8;
+type GMStr = *const i8;
 
-fn gmstr_to_str(arg:GMStrArg) -> &'static str {
+static mut GMSTRING: Lazy<CString> = Lazy::new(|| CString::new("").expect("error"));
+
+fn gmstr_to_string(arg:GMStr) -> &'static str {
     let c_str: &CStr = unsafe { CStr::from_ptr(arg) };
     let str_slice: &str = c_str.to_str().unwrap();
     str_slice
 }
 
-fn string_to_gmstr(arg:String) -> GMStr {
-    CString::new(arg.as_str()).expect("error").into_raw()
-}
-fn str_to_gmstr(arg:&str) -> GMStr {
-    CString::new(arg).expect("error").into_raw()
+fn string_to_gmstr(arg:impl AsRef<str>) -> GMStr {
+    unsafe {
+        *GMSTRING = CString::new(arg.as_ref()).expect("error");
+        GMSTRING.as_ptr()
+    }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -30,8 +30,8 @@ fn str_to_gmstr(arg:&str) -> GMStr {
 static CHANNEL: Mutex<Lazy<(Sender<DebouncedEvent>, Receiver<DebouncedEvent>)>> = const_mutex(Lazy::new(|| channel()));
     
 #[no_mangle]
-pub extern fn __gm82live_dll_fw_init(directory: GMStrArg) -> GMReal {
-    let directory = gmstr_to_str(directory);
+pub extern fn __gm82live_dll_fw_init(directory: GMStr) -> GMReal {
+    let directory = gmstr_to_string(directory);
     
     // Create a channel to receive the events.
     let (sender, _) = &**CHANNEL.lock();
@@ -55,7 +55,7 @@ pub extern fn __gm82live_dll_fw_poll() -> GMStr {
     let (_, receiver) = &**CHANNEL.lock();
     match receiver.try_recv() {
         Ok(event) => string_to_gmstr(format!("{:?}", event)),
-        Err(TryRecvError::Empty) => str_to_gmstr("no events"),
-        Err(_) => str_to_gmstr("disconnected"),
+        Err(TryRecvError::Empty) => string_to_gmstr("no events"),
+        Err(_) => string_to_gmstr("disconnected"),
     }
 }

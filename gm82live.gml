@@ -108,10 +108,10 @@
 //----------------------live code editor module---------------------------------
 
 #define __gm82live_fw_init
-    //__gm82live_dll_fw_init(working_directory+"\")
+    __gm82live_dll_fw_init(working_directory+"\")
 
 
 #define __gm82live_fw_poll
-    //return __gm82live_dll_fw_poll()
+    return __gm82live_dll_fw_poll()
 //
 //
