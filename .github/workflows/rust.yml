@@ -1,0 +1,33 @@
+name: Rust
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch: {}
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions-rs/toolchain@v1
+      with:
+        target: i686-pc-windows-msvc
+    - name: Build
+      run: cargo build --release --verbose
+    
+    - name: Generate .gex
+      run: py build.py gm82live.gej --noinstall
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: gm82live
+        path: gm82live.gex
