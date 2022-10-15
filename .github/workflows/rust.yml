@@ -25,7 +25,7 @@ jobs:
       run: cargo build --release --verbose
     
     - name: Generate .gex
-      run: py build.py gm82live.gej --noinstall
+      run: py build_gex.py gm82live.gej --noinstall
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
