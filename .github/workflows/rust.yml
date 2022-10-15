@@ -21,6 +21,7 @@ jobs:
       with:
         target: i686-pc-windows-msvc
         toolchain: stable
+        default: true
     - name: Build
       run: cargo build --release --verbose
     
