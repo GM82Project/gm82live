@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "0.2",
 	"author": "renex",
-	"date": "26/08/2022",
+	"date": "13/04/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package allows realtime development with compatible tools.",
 	"helpfile": "",
@@ -50,6 +50,15 @@
 			"init": "__gm82live_init",
 			"final": "",
 			"functions": [
+				{
+					"name": "live_path_reload",
+					"extname": "__gm82live_path_reload",
+					"calltype": 2,
+					"helpline": "live_path_reload()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
 				{
 					"name": "live_roomeditor_add_obj_exclusion",
 					"extname": "__gm82live_re_addobj",

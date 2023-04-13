@@ -2,7 +2,32 @@
     globalvar __gm82live_listen;__gm82live_listen=noone
     globalvar __gm82live_sock;__gm82live_sock=noone
     globalvar __gm82live_nochange;__gm82live_nochange=ds_list_create()
+    globalvar __gm82live_directory;__gm82live_directory=working_directory
 
+
+//----------------------live path module----------------------------------------
+
+#define __gm82live_path_reload
+    var __dir,__str,__f,__f2,__path;
+    __dir=__gm82live_directory+"\paths\"
+
+    __f=file_text_open_read(__dir+"index.yyd")
+    do {
+        __str=file_text_read_string(__f)
+        file_text_readln(__f)
+        if (__str!="") {
+            __path=execute_string("return "+__str)
+            path_clear_points(__path)
+            __f2=file_text_open_read(__dir+__str+"\points.txt")
+            do {
+                string_token_start(file_text_read_string(__f2),",")
+                file_text_readln(__f2)
+                path_add_point(__path,real(string_token_next()),real(string_token_next()),real(string_token_next()))
+            } until file_text_eof(__f2)
+            file_text_close(__f2)
+        }  
+    } until file_text_eof(__f)
+    file_text_close(__f)
 
 //----------------------live room editor module---------------------------------
 
