@@ -25,7 +25,7 @@ jobs:
       run: cargo build --release --verbose
 
     - name: Download gm82gex
-      run: wget https://raw.githubusercontent.com/GM82Project/gm82gex/main/gm82gex.py
+      run: curl https://raw.githubusercontent.com/GM82Project/gm82gex/main/gm82gex.py -o gm82gex.py
 
     - name: Build .gex
       run: python gm82gex.py ${{github.workspace}}/gm82live.gej --noinstall
