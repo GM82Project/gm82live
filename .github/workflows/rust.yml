@@ -23,9 +23,12 @@ jobs:
         toolchain: stable
     - name: Build
       run: cargo build --release --verbose
-    
-    - name: Generate .gex
-      run: py build_gex.py gm82live.gej --noinstall
+
+    - name: Download gm82gex
+      run: wget https://raw.githubusercontent.com/GM82Project/gm82gex/main/gm82gex.py
+
+    - name: Build .gex
+      run: python gm82gex.py ${{github.workspace}}/gm82live.gej --noinstall
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
