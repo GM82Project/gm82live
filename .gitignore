@@ -2,5 +2,4 @@ Cargo.lock
 target
 *.dll
 *.gex
-desktop.ini
 gm82gex.py

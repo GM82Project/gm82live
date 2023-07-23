@@ -3,7 +3,7 @@
 	"folder": "gm82",
 	"version": "0.2",
 	"author": "renex",
-	"date": "13/04/2023",
+	"date": "23/07/2023",
 	"license": "Free to use, also for commercial games.",
 	"description": "Part of the standard Game Maker 8.2 distribution. This extension package allows realtime development with compatible tools.",
 	"helpfile": "",
@@ -15,7 +15,7 @@
 	"files": [
 		{
 			"filename": "gm82live.dll",
-			"origname": "target\\i686-pc-windows-msvc\\release\\gm82live.dll",
+			"origname": "gm82live.dll",
 			"kind": 1,
 			"init": "",
 			"final": "",
