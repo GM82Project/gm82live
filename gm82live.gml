@@ -32,10 +32,10 @@
 //----------------------live room editor module---------------------------------
 
 #define __gm82live_re_init
-    with (__gm82core_object) {
+    with (gm82core_object) {
         if (__gm82live_listen==noone) {
-            object_event_add(__gm82core_object,ev_step,ev_step_begin,"__gm82live_re_poll()")
-            object_event_add(__gm82core_object,ev_other,ev_room_start,"__gm82live_re_request()")
+            object_event_add(gm82core_object,ev_step,ev_step_begin,"__gm82live_re_poll()")
+            object_event_add(gm82core_object,ev_other,ev_room_start,"__gm82live_re_request()")
             __gm82live_listen=listeningsocket_create()
             listeningsocket_start_listening(__gm82live_listen,0,4126,1)
         }
