@@ -8,6 +8,9 @@
 //----------------------live path module----------------------------------------
 
 #define __gm82live_path_reload
+    ///live_path_reload()
+    //Reloads all paths from disk.
+    
     var __dir,__str,__f,__f2,__path;
     __dir=__gm82live_directory+"\paths\"
 
@@ -32,6 +35,9 @@
 //----------------------live room editor module---------------------------------
 
 #define __gm82live_re_init
+    ///live_roomeditor_start()
+    //Initializes the live room editor module. This must be called before attempting to connect with the room editor.
+    
     with (gm82core_object) {
         if (__gm82live_listen==noone) {
             object_event_add(gm82core_object,ev_step,ev_step_begin,"__gm82live_re_poll()")
@@ -43,12 +49,22 @@
 
 
 #define __gm82live_re_status
+    ///live_roomeditor_status()
+    //returns: A status string with the state of the live connection to the room editor.
+    //"offline": no connection is made.
+    //"ready": waiting for the room editor.
+    //"active": live session in progress.
+    
     if (__gm82live_sock!=noone) return "active"
     if (__gm82live_listen!=noone) return "ready"
     return "offline"
     
 
 #define __gm82live_re_addobj
+    ///live_roomeditor_add_obj_exclusion(object)
+    //object: object index to exclude
+    //Adds an object to the exclusion list for live room reloads. These objects aren't destroyed, recreated or otherwise synced.
+    
     ds_list_add(__gm82live_nochange,argument0)
 
 
