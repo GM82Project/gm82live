@@ -17,9 +17,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - uses: dtolnay/rust-toolchain@nightly
+    - uses: dtolnay/rust-toolchain@stable
       with:
         components: rust-src
+        targets: i686-win7-windows-msvc
     - name: Build
       run: cargo build --release --verbose --target=i686-win7-windows-msvc
       
