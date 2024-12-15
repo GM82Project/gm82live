@@ -1,5 +1,0 @@
-[build]
-target="i686-pc-windows-msvc"
-
-[target.i686-pc-windows-msvc]
-rustflags = ["-Ctarget-feature=+crt-static"]
