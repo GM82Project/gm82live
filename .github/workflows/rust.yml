@@ -20,9 +20,8 @@ jobs:
     - uses: dtolnay/rust-toolchain@nightly
       with:
         components: rust-src
-        targets: i686-win7-windows-msvc
     - name: Build
-      run: cargo build --release --verbose --target=i686-win7-windows-msvc
+      run: cargo build -Zbuild-std --release --verbose --target=i686-win7-windows-msvc
       
     - name: Move artifact
       run: move .\target\i686-pc-windows-msvc\release\gm82live.dll gm82live.dll
