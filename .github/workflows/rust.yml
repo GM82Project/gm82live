@@ -16,13 +16,12 @@ jobs:
     runs-on: windows-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions-rs/toolchain@v1
+    - uses: actions/checkout@v4
+    - uses: dtolnay/rust-toolchain@stable
       with:
-        target: i686-pc-windows-msvc
-        toolchain: stable
+        components: rust-src
     - name: Build
-      run: cargo build --release --verbose
+      run: cargo build --release --verbose --target=i686-win7-windows-msvc
       
     - name: Move artifact
       run: move .\target\i686-pc-windows-msvc\release\gm82live.dll gm82live.dll
@@ -34,7 +33,7 @@ jobs:
       run: python gm82gex.py ${{github.workspace}}/gm82live.gej --noinstall
 
     - name: Upload artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: gm82live
         path: gm82live.gex
