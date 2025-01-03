@@ -1,0 +1,62 @@
+{
+	"name": "Game Maker 8.2 Live Stub",
+	"folder": "gm82",
+	"version": "0.3",
+	"author": "renex",
+	"date": "03/01/2025",
+	"license": "Free to use, also for commercial games.",
+	"description": "Stub version of the Live extension. Used in production builds of games utilising the extension.",
+	"helpfile": "",
+	"hidden": false,
+	"dependencies": [],
+	"files": [
+		{
+			"filename": "gm82live_stub.gml",
+			"origname": "gm82live_stub.gml",
+			"kind": 2,
+			"init": "",
+			"final": "",
+			"functions": [
+				{
+					"name": "live_path_reload",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "live_path_reload()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "live_roomeditor_add_obj_exclusion",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "live_roomeditor_add_obj_exclusion(object)",
+					"hidden": false,
+					"argtypes": [
+						2
+					],
+					"returntype": 2
+				},
+				{
+					"name": "live_roomeditor_start",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "live_roomeditor_start()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				},
+				{
+					"name": "live_roomeditor_status",
+					"extname": "",
+					"calltype": 2,
+					"helpline": "live_roomeditor_status()",
+					"hidden": false,
+					"argtypes": [],
+					"returntype": 2
+				}
+			],
+			"constants": []
+		}
+	]
+}
